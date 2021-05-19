@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Layout from "../core/Layout";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css'
+import { Link } from 'react-router-dom'
 
 const Signup = () => {
 
@@ -67,7 +68,7 @@ const Signup = () => {
                 {signupForm()}
                 <br />
                 <Link to={"/auth/password/forogot"} className={"btn btn-sm btn-outline"}>
-
+                    Forgot Password
                 </Link>
             </div>
         </Layout>
