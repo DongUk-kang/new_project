@@ -5,8 +5,11 @@ const Layout = ( { children } ) => {
 
     const nav = () => (
         <ul className={"nav nav-tabs bg-primary"}>
-            <li className={"nav nav-item"}>
-                <a href={"/"} className={"text-light"}>Home</a>
+            <li className={"nav-item"}>
+                <Link to={"/"} className={"text-light nav-link"}>Home</Link>
+            </li>
+            <li className={"nav-item"}>
+                <Link to={"/signup"} className={"text-light nav-link"}>SignUP</Link>
             </li>
         </ul>
     )

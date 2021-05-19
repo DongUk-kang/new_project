@@ -1,11 +1,18 @@
 import React from 'react';
-import Layout from "./core/Layout";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import Main from "./screens/Main";
+import Signup from "./screens/Signup";
 
 const App = () => {
     return (
-        <Layout>
-            <h1>test</h1>
-        </Layout>
+        <BrowserRouter>
+            <Switch>
+                <Route path={"/"} exact component={Main} />
+                <Route path={"/signup"} exact component={Signup} />
+                <Redirect from={"*"} to={"/"} />
+            </Switch>
+        </BrowserRouter>
+
     );
 };
 
