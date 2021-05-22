@@ -1,32 +1,31 @@
 import React, {useState} from 'react';
 import Layout from "../core/Layout";
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css'
-import { Link } from 'react-router-dom'
-import forgot from '../assets/forget.svg'
-import login from "../assets/login.svg";
+import { Link } from "react-router-dom";
+import reset from "../assets/reset.svg"
+import forgot from "../assets/forget.svg";
 
-const ForgotPassword = () => {
 
-    const [ ForgotPassword, setForgotPassword ] = useState({
-        email: '',
-        textChange: 'Send'
-    })
+const NewPassword = () => {
 
-    const { email, textChange } = ForgotPassword
+    const [ newpassword, setNewPassword ] = useState({
+        password: '',
+        textChange: 'submit'
+    });
 
-    const handleChange = email => event => {
-        setForgotPassword({...ForgotPassword, [email]: event.target.value})
+    const { password,  textChange } = newpassword
+
+    const handleChange = text => event => {
+        setNewPassword({...newpassword, [text]: event.target.value })
     }
 
     const clickSubmit = event => {
         event.preventDefault();
 
-        const ForGotPassWord = {
-            email: ForgotPassword.email
-        }
+       const NewPassword = {
+           password
+       }
 
-        console.log(ForGotPassWord)
+       console.log(NewPassword)
     }
 
     return (
@@ -35,16 +34,16 @@ const ForgotPassword = () => {
                 <div className={"lg:w-1/2 xl:w-5/12 p-6 sm:p-12"}>
                     <div className={"mt-12 flex flex-col items-center"}>
                         <h1 className={"text-2xl xl:text-3xl font-extra-bold"}>
-                            Looking for Password
+                            New Password
                         </h1>
                         <form className={'w-full flex-1 mt-8 text-indigo-500'} onSubmit={clickSubmit}>
                             <div className={"mx-auto max-w-xs relative"}>
                                 <input
                                     className={"w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"}
-                                    type={'email'}
-                                    placeholder={"Email"}
-                                    onChange={handleChange('email')}
-                                    value={email}
+                                    type={'password'}
+                                    placeholder={"Passoword"}
+                                    onChange={handleChange('password')}
+                                    value={password}
                                 />
                                 <button
                                     type={"submit"}
@@ -74,7 +73,7 @@ const ForgotPassword = () => {
                 <div className={"flex-1 bg-indigo-100 text-center hidden lg:flex"}>
                     <div
                         className={"m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"}
-                        style={{ backgroundImage: `url(${forgot})` }}
+                        style={{ backgroundImage: `url(${reset})` }}
                     >
                     </div>
                 </div>
@@ -83,4 +82,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default NewPassword;

@@ -35,66 +35,48 @@ const Signup = () => {
 
         console.log(regiseteruser)
 
-        // console.log(regiseteruser)
-        // axios.post("https://localhost:5000/users/signup", newUser)
-        //     .then(data => console.log(data))
-        //     .catch(err => console.log(err))
+        if (name && email && password) {
+            //패스워드가 불일치 할때
+            if (password !== password2) {
+                toast.error("Password Don't match")
+
+            }
+
+            setFormData({...formData, textChange: 'Submitting'})
+            axios
+                .post('/users/signup',  regiseteruser)
+                .then(res => {
+                    setFormData({
+                        ...formData,
+                        name: '',
+                        email: '',
+                        password: '',
+                        password2: '',
+                        textChange: "Submitted"
+                    })
+
+                    toast.success(res.data.message);
+                })
+                .catch(err => {
+                    setFormData({
+                        ...formData,
+                        name: '',
+                        email: '',
+                        password: '',
+                        password2: '',
+                        textChange: "Sign up"
+                    })
+                })
+
+        } else {
+            toast.error('please fill all fields')
+        }
     }
 
 
-
-
-
-    // const signupForm = () => (
-    //     <form>
-    //         <div className={"form-group"}>
-    //             <label className={"text-muted"}>Name</label>
-    //             <input
-    //                 onChange={handleChange('name')}
-    //                 value={name}
-    //                 type={"text"}
-    //                 className={"form-control"}
-    //             />
-    //         </div>
-    //         <div className={"form-group"}>
-    //             <label className={"text-muted"}>Email</label>
-    //             <input
-    //                 onChange={handleChange('name')}
-    //                 value={email}
-    //                 type={"email"}
-    //                 className={"form-control"}
-    //             />
-    //         </div>
-    //         <div className={"form-group"}>
-    //             <label className={"text-muted"}>Password</label>
-    //             <input
-    //                 onChange={handleChange('password')}
-    //                 value={password}
-    //                 type={"password"}
-    //                 className={"form-control"}
-    //             />
-    //         </div>
-    //         <div>
-    //             <button className={"btn btn-primary"} onClick={clickSubmit}>
-    //                 {buttonText}
-    //             </button>
-    //         </div>
-    //     </form>
-    // )
-
     return (
-        // <Layout>
-        //     <div className={"col-md-6 offset-md-3"}>
-        //         <ToastContainer />
-        //         <h1 className={"p-5 text-center"}>Sign up</h1>
-        //         {signupForm()}
-        //         <br />
-        //         <Link to={"/auth/password/forgot"} className={"btn btn-sm btn-outline"}>
-        //             Forgot Password
-        //         </Link>
-        //     </div>
-        // </Layout>
         <div className={"min-h-screen bg-gray-100 text-gray-900 flex justify-center"}>
+            <ToastContainer />
             <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div className='mt-12 flex flex-col items-center'>

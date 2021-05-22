@@ -5,6 +5,7 @@ import Signup from "./screens/Signup";
 import Login from "./screens/Login";
 import ForgotPassword from "./screens/ForgotPassword";
 import Activate  from "./screens/Activate"
+import NewPassword from "./screens/NewPassword";
 
 const App = () => {
     return (
@@ -13,7 +14,8 @@ const App = () => {
                 <Route path={"/"} exact component={Main} />
                 <Route path={"/signup"} exact component={Signup} />
                 <Route path={"/login"} exact component={Login} />
-                <Route path={"/activate/:token"} exact component={Activate} />
+                <Route path={"/users/activate/:token"} exact component={Activate} />
+                <Route path={"/reset/:token"} exact component={NewPassword} />
                 <Route path={"/forgotpassword"} exact component={ForgotPassword}/>
                 <Redirect from={"*"} to={"/"} />
             </Switch>
