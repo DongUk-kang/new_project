@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import Layout from "../core/Layout";
 import { Link } from "react-router-dom";
 import reset from "../assets/reset.svg"
-import forgot from "../assets/forget.svg";
 
 
 const NewPassword = () => {

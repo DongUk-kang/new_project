@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import Layout from "../core/Layout";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css'
 import { Link } from 'react-router-dom'
 import forgot from '../assets/forget.svg'
-import login from "../assets/login.svg";
 
 const ForgotPassword = () => {
 
