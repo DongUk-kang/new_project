@@ -4,6 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css'
 import { Link } from 'react-router-dom'
 import login from '../assets/login.svg'
+import { GoogleLogin } from 'react-google-login'
+import FacebookLogin  from 'react-facebook-login/dist/facebook-login-render-props';
 
 const Login = () => {
 
@@ -13,19 +15,30 @@ const Login = () => {
         textChange: 'submit'
     });
 
+
     const { email, password, textChange } = LoginData
 
-    const handleChange = email => event => {
-        setLoginData({...LoginData, [email]: event.target.values})
+    const handleChange = text => event => {
+        setLoginData({...LoginData, [text]: event.target.value})
+    }
+
+    const responseGoogle = response => {
+
+    }
+
+    const responseFacebook = response => {
+
     }
 
     const clickSubmit = event => {
         event.preventDefault();
 
         const LoginUser = {
-            email: LoginData.email,
-            password: LoginData.password
+            email,
+            password
         }
+
+        console.log(LoginUser)
     }
 
     // const loginForm = () => (
@@ -76,6 +89,45 @@ const Login = () => {
                         <h1 className={"text-2xl xl:text-3xl font-extra-bold"}>
                             Login for Dong Uk
                         </h1>
+                        <div className={'w-full flex-1 mt-8 text-indigo-500'}>
+                            <div className={'flex flex-col items-center'}>
+                                <GoogleLogin
+                                    clientId={'934995609960-802ftdis9qvennlghppu2eqobmgqhdvi.apps.googleusercontent.com'}
+                                    onSuccess={responseGoogle}
+                                    onFailure={responseGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                    render={renderProps => (
+                                        <button
+                                            onClick={renderProps.onClick}
+                                            disabled={renderProps.disabled}
+                                            className={'w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'}
+                                        >
+                                            <div className={"p-2 rounded-full"}>
+                                                <i className={'fab fa-google'} />
+                                            </div>
+                                            <span className={"ml-4"}>Sign in with Google</span>
+                                        </button>
+                                    )}
+                                />
+                                <FacebookLogin
+                                    appId={'392528391907770'}
+                                    autoLoad={false}
+                                    callback={responseFacebook}
+                                    render={renderProps => (
+                                        <button
+                                            onClick={renderProps.onClick}
+                                            disabled={renderProps.disabled}
+                                            className={'w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'}
+                                        >
+                                            <div className={"p-2 rounded-full"}>
+                                                <i className={'fab fa-facebook'} />
+                                            </div>
+                                            <span className={"ml-4"}>Sign in with Facebook</span>
+                                        </button>
+                                    )}
+                                />
+                            </div>
+                        </div>
                         <form className={'w-full flex-1 mt-8 text-indigo-500'} onSubmit={clickSubmit}>
                             <div className={"mx-auto max-w-xs relative"}>
                                 <input

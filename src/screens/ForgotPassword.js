@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     const { email, textChange } = ForgotPassword
 
     const handleChange = email => event => {
-        setForgotPassword({...ForgotPassword, [email]: event.target.values})
+        setForgotPassword({...ForgotPassword, [email]: event.target.value})
     }
 
     const clickSubmit = event => {
@@ -25,6 +25,8 @@ const ForgotPassword = () => {
         const ForGotPassWord = {
             email: ForgotPassword.email
         }
+
+        console.log(ForGotPassWord)
     }
 
     return (

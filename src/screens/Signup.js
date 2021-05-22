@@ -20,20 +20,22 @@ const Signup = () => {
 
     const { name, email, password, password2, textChange } = formData
 
-    const handleChange = name => event => {
-        setFormData({...formData, [name]: event.target.values })
+    const handleChange = text => event => {
+        setFormData({...formData, [text]: event.target.value })
     }
 
     const clickSubmit = event => {
         event.preventDefault();
 
-        const newUser = {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password
-        }
+        const regiseteruser = {
+            name,
+            email,
+            password
+         }
 
-        console.log(newUser)
+        console.log(regiseteruser)
+
+        // console.log(regiseteruser)
         // axios.post("https://localhost:5000/users/signup", newUser)
         //     .then(data => console.log(data))
         //     .catch(err => console.log(err))
