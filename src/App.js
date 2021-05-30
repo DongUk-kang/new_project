@@ -19,7 +19,7 @@ const App = () => {
                 <Route path={"/users/activate/:token"} exact component={Activate} />
                 <Route path={"/reset/:token"} exact component={NewPassword} />
                 <Route path={"/forgotpassword"} exact component={ForgotPassword}/>
-                <Route path={"/profile"} exact component={Profile}/>
+                <Route path={"/private"} exact component={Profile}/>
                 <Route path={"/admin"} exact component={Admin}/>
                 <Redirect from={"*"} to={"/"} />
             </Switch>

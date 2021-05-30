@@ -1,33 +1,66 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import reset from "../assets/reset.svg"
+import axios from "axios";
+import { ToastContainer,toast } from "react-toastify";
 
 
-const NewPassword = () => {
+const NewPassword = ({ match }) => {
 
-    const [ newpassword, setNewPassword ] = useState({
-        password: '',
+    const [formData, setFormData] = useState({
+        newpassword: '',
+        token: '',
         textChange: 'submit'
-    });
+    })
 
-    const { password,  textChange } = newpassword
+    const { newpassword, token, textChange } = formData
+
+    useEffect(() => {
+        let token = match.params.token;
+        if (token) {
+            setFormData({...formData, token })
+        }
+    }, [])
 
     const handleChange = text => event => {
-        setNewPassword({...newpassword, [text]: event.target.value })
+        setFormData({...formData, [text]: event.target.value })
     }
 
     const clickSubmit = event => {
         event.preventDefault();
+        if (newpassword){
+            setFormData({...formData, textChange: 'Submitting...'})
+            axios
+                .put('/users/resetpassword', {resetPasswordLink: token, newPassword: newpassword})
+                .then(res => {
+                    console.log(res.data)
+                    setFormData({
+                        ...formData,
+                        newpassword: '',
+                        token: '',
+                        textChange: "New Password"
+                    })
+                    toast.success(res.data.message)
+                })
+                .catch(err => {
+                    toast.error(err.response.data.error)
+                    setFormData({
+                        ...formData,
+                        newpassword: '',
+                        token: '',
+                        textChange: "checking Password"
+                    })
+                })
 
-       const NewPassword = {
-           password
-       }
 
-       console.log(NewPassword)
+        }
+
+
     }
 
     return (
         <div className={"min-h-screen bg-gray-100 text-gray-900 flex justify-center"}>
+            <ToastContainer />
             <div className={'max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'}>
                 <div className={"lg:w-1/2 xl:w-5/12 p-6 sm:p-12"}>
                     <div className={"mt-12 flex flex-col items-center"}>
@@ -40,8 +73,8 @@ const NewPassword = () => {
                                     className={"w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"}
                                     type={'password'}
                                     placeholder={"Passoword"}
-                                    onChange={handleChange('password')}
-                                    value={password}
+                                    onChange={handleChange('newpassword')}
+                                    value={newpassword}
                                 />
                                 <button
                                     type={"submit"}
