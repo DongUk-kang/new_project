@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css'
 import { Link } from 'react-router-dom'
 import forgot from '../assets/forget.svg'
+import axios from "axios";
 
 const ForgotPassword = () => {
 
@@ -20,15 +21,41 @@ const ForgotPassword = () => {
     const clickSubmit = event => {
         event.preventDefault();
 
-        const ForGotPassWord = {
+        const forgotPassword = {
             email: ForgotPassword.email
         }
 
-        console.log(ForGotPassWord)
+        console.log(forgotPassword)
+
+
+        setForgotPassword({...ForgotPassword, textChange: 'Submitting'})
+        axios
+            .put('/users/forgotpassword', forgotPassword)
+            .then(res => {
+                console.log(res.data)
+                setForgotPassword({
+                    ...ForgotPassword,
+                    email: '',
+                    textChange: "send"
+                })
+
+                toast.success(res.data.message)
+            })
+            .catch(err => {
+                toast.error(err.response.data.error)
+                setForgotPassword({
+                    ...ForgotPassword,
+                    email: '',
+                    textChange: "checking mail"
+                })
+            })
+
+
     }
 
     return (
         <div className={"min-h-screen bg-gray-100 text-gray-900 flex justify-center"}>
+            <ToastContainer />
             <div className={'max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'}>
                 <div className={"lg:w-1/2 xl:w-5/12 p-6 sm:p-12"}>
                     <div className={"mt-12 flex flex-col items-center"}>

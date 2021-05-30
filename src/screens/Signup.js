@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import { Link } from 'react-router-dom'
 import axios from "axios";
 import authSvg from "../assets/auth.svg"
+import { GoogleLogin } from 'react-google-login'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 const Signup = () => {
 
@@ -23,6 +25,14 @@ const Signup = () => {
         setFormData({...formData, [text]: event.target.value })
     }
 
+    const responseGoogle = response => {
+
+    }
+
+    const responseFacebook = response => {
+
+    }
+
     const clickSubmit = event => {
         event.preventDefault();
 
@@ -35,6 +45,7 @@ const Signup = () => {
         console.log(regiseteruser)
 
         if (name && email && password) {
+
             //패스워드가 불일치 할때
             if (password !== password2) {
                 toast.error("Password Don't match")
@@ -45,6 +56,7 @@ const Signup = () => {
             axios
                 .post('/users/signup',  regiseteruser)
                 .then(res => {
+                    console.log(res)
                     setFormData({
                         ...formData,
                         name: '',
@@ -57,6 +69,9 @@ const Signup = () => {
                     toast.success(res.data.message);
                 })
                 .catch(err => {
+
+                    toast.error(err.response.data.error)
+
                     setFormData({
                         ...formData,
                         name: '',
@@ -79,11 +94,57 @@ const Signup = () => {
             <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div className='mt-12 flex flex-col items-center'>
-                        <h1 className='text-2xl xl:text-3xl font-extra-bold'>
+                        <h1 className='text-2xl xl:text-3xl font-extrabold'>
                             Sign Up for Dong Uk
                         </h1>
+                        <div className={'w-full flex-1 mt-8 text-indigo-500'}>
+                            <div className={'flex flex-col items-center'}>
+                                <GoogleLogin
+                                    clientId={'934995609960-802ftdis9qvennlghppu2eqobmgqhdvi.apps.googleusercontent.com'}
+                                    onSuccess={responseGoogle}
+                                    onFailure={responseGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                    render={renderProps => (
+                                        <button
+                                            onClick={renderProps.onClick}
+                                            disabled={renderProps.disabled}
+                                            className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'
+                                        >
+                                            <div className=' p-2 rounded-full '>
+                                                <i className='fab fa-google ' />
+                                            </div>
+                                            <span className={'ml-4'}>Sign up with Google</span>
+                                        </button>
+                                    )}
+                                />
+                                <FacebookLogin
+                                    appId={'392528391907770'}
+                                    autoLoad={false}
+                                    callback={responseFacebook}
+                                    render={renderProps => (
+                                        <button
+                                            onClick={renderProps.onClick}
+                                            className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
+                                        >
+                                         <div className={' p-2 rounded-full'}>
+                                             <i className={'fab fa-facebook'}/>
+                                         </div>
+                                         <span className={'ml-4'}>Sign up with Facebook</span>
+                                        </button>
+                                    )}
+                                />
+                            </div>
+                        </div>
+                        <div className={"my-12 border-b text-center"}>
+                            <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'>
+                                Or sign up with email
+                            </div>
+                        </div>
 
-                        <form className={'w-full flex-1 mt-8 text-indigo-500'} onSubmit={clickSubmit}>
+                        <form
+                            className={'w-full flex-1 mt-8 text-indigo-500'}
+                            onSubmit={clickSubmit}
+                        >
                             <div className={"mx-auto max-w-xs relative"}>
                                 <input
                                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
@@ -121,9 +182,9 @@ const Signup = () => {
                                     <span className='ml-3'>{textChange}</span>
                                 </button>
                             </div>
-                            <div className={"my-12 border-b text-center"}>
+                            <div className='my-12 border-b text-center'>
                                 <div className='leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2'>
-                                    Or sign with email or social login
+                                    Or sign In with e-mail
                                 </div>
                             </div>
                             <div className={'flex flex-col items-center'}>

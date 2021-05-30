@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import login from '../assets/login.svg'
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin  from 'react-facebook-login/dist/facebook-login-render-props';
+import axios from "axios";
 
 const Login = () => {
 
@@ -38,6 +39,46 @@ const Login = () => {
         }
 
         console.log(LoginUser)
+
+        if (email && password) {
+
+            // 이메일
+             if (email !== email)
+                toast.error("Email Don't match")
+
+            // 패스워드 불일치할때
+            if (password !== password) {
+                toast.error("Password Don't match")
+            }
+
+            setLoginData({...LoginData, textChange: 'submitting'})
+            axios
+                .post('/users/login', LoginUser)
+                .then(res => {
+                    console.log(res.data)
+                    setLoginData({
+                        ...LoginData,
+                        email: '',
+                        password: '',
+                        textChange: "submitted"
+                    })
+
+                    toast.success(res.data.message)
+                })
+                .catch(err => {
+
+                    toast.error(err.response.data.error)
+                    setLoginData({
+                        ...LoginData,
+                        email: '',
+                        password: '',
+                        textChange: "looking for Password"
+                    })
+                })
+
+        } else {
+            toast.error('please fill all fields')
+        }
     }
 
     // const loginForm = () => (
@@ -177,6 +218,7 @@ const Login = () => {
         //     </div>
         // </div>
         <div className='min-h-screen bg-gray-100 text-gray-900 flex justify-center'>
+            <ToastContainer />
             <div className='max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'>
                 <div className='lg:w-1/2 xl:w-5/12 p-6 sm:p-12'>
                     <div className='mt-12 flex flex-col items-center'>
@@ -223,7 +265,7 @@ const Login = () => {
                                 <a
                                     className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
            bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
-                                    href='/register'
+                                    href='/signup'
                                     target='_self'
                                 >
                                     <i className='fas fa-user-plus fa 1x w-6  -ml-2 text-indigo-500' />
@@ -261,7 +303,7 @@ const Login = () => {
                                     <span className='ml-3'>{textChange}</span>
                                 </button>
                                 <Link
-                                    to='/users/password/forget'
+                                    to='/forgotpassword'
                                     className='no-underline hover:underline text-indigo-500 text-md text-right absolute right-0  mt-2'
                                 >
                                     Forget password?
