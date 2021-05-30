@@ -6,6 +6,8 @@ import Login from "./screens/Login";
 import ForgotPassword from "./screens/ForgotPassword";
 import Activate  from "./screens/Activate"
 import NewPassword from "./screens/NewPassword";
+import Profile from "./screens/Profile";
+import Admin from "./screens/Admin";
 
 const App = () => {
     return (
@@ -17,6 +19,8 @@ const App = () => {
                 <Route path={"/users/activate/:token"} exact component={Activate} />
                 <Route path={"/reset/:token"} exact component={NewPassword} />
                 <Route path={"/forgotpassword"} exact component={ForgotPassword}/>
+                <Route path={"/profile"} exact component={Profile}/>
+                <Route path={"/admin"} exact component={Admin}/>
                 <Redirect from={"*"} to={"/"} />
             </Switch>
         </BrowserRouter>
