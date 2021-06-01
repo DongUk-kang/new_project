@@ -60,7 +60,6 @@ const Activate = ({ match }) => {
                                 <i className={'fas-user-plus fa 1x w-6 -ml-2'}/>
                                 <span className={'ml-3'}>Account Register</span>
                             </button>
-
                         </form>
                     </div>
                 </div>

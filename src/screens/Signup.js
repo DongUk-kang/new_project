@@ -6,6 +6,8 @@ import axios from "axios";
 import authSvg from "../assets/auth.svg"
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import KakaoLogin from 'react-kakao-login'
+import NaverLogin from 'react-login-by-naver';
 
 const Signup = () => {
 
@@ -25,12 +27,35 @@ const Signup = () => {
         setFormData({...formData, [text]: event.target.value })
     }
 
-    const responseGoogle = response => {
+    const sendGoogletoken = tokenId => {
+        // setFormData({...formData})
+        // axios
+        //     .get('/users/google',{
+        //         access_token: tokenId
+        //     })
+        //     .then(res => {
+        //         console.log(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log("+++", err.response.data)
+        //     })
+    }
 
+    const responseGoogle = response => {
+        console.log("-----", response)
+        sendGoogletoken(response.accessToken)
     }
 
     const responseFacebook = response => {
 
+    }
+
+    const responseKakao = response => {
+        console.log("___", response)
+    }
+
+    const responseNaver = response => {
+        console.log(response)
     }
 
     const clickSubmit = event => {
@@ -132,6 +157,40 @@ const Signup = () => {
                                          <span className={'ml-4'}>Sign up with Facebook</span>
                                         </button>
                                     )}
+                                />
+                                <KakaoLogin
+                                    token={"e0ca0743d4d9aa41ff3a547e195c0969"}
+                                    nSuccess={responseKakao}
+                                    onFail={responseKakao}
+                                    getProfile={true}
+                                    render={renderProps => (
+                                        <button
+                                            onClick={renderProps.onClick}
+                                            className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
+                                        >
+                                            <div className={' p-2 rounded-full'}>
+                                                <i className={'fab fa-facebook'}/>
+                                            </div>
+                                            <span className={'ml-4'}>Sign up with kakao</span>
+                                        </button>
+                                    )}
+                                />
+                                <NaverLogin
+                                    clientId={"pRWxbgrxkRMv_b4giMT4"}
+                                    callbackUrl={"http://localhost:3000/callback"}
+                                    render={renderProps => (
+                                        <button
+                                            onClick={renderProps.onClick}
+                                            className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5'
+                                        >
+                                            <div className={' p-2 rounded-full'}>
+                                                <i className={'fab fa-facebook'}/>
+                                            </div>
+                                            <span className={'ml-4'}>Sign up with Naver</span>
+                                        </button>
+                                    )}
+                                    onSuccess={responseNaver}
+                                    onFailure={responseNaver}
                                 />
                             </div>
                         </div>
