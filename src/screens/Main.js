@@ -1,7 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
+import {isAuth} from "../helpers/auth";
 
-const Main = () => {
+const Main = ({ history }) => {
+
+    useEffect(() => {
+        isAuth()
+            ? history.push("/private")
+            : history.push("/")
+
+    }, [])
+
     return (
         <div className={'min-h-screen bg-gray-100 text-gray-9100 flex justify-center'}>
             <div className={'max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1'}>

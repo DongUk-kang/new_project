@@ -51,3 +51,21 @@ export const authenticate = (response, next) => {
     next();
 }
 
+export const signout = (next) => {
+    removeCookie('token')
+    removeLocalStorage('user')
+    next();
+}
+
+export const isAuth = () => {
+    if (window !== 'undefined') {
+        const cookieCheked = getCookie('token')
+        if (cookieCheked) {
+            if (localStorage.getItem('user')) {
+                return JSON.parse(localStorage.getItem('user'))
+            } else {
+                return false;
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getCookie} from "../helpers/auth";
+import {getCookie, isAuth} from "../helpers/auth";
 import {ToastContainer} from "react-toastify";
 import {Link} from "react-router-dom";
 import updateSVG from '../assets/update.svg'
@@ -7,7 +7,7 @@ import axios from "axios";
 import Moment from 'react-moment'
 import 'moment-timezone'
 
-const Profile = () => {
+const Profile = ({ history }) => {
 
     const [formData, setFormData ] = useState({
         name: '',
@@ -51,6 +51,9 @@ const Profile = () => {
 
     useEffect(() => {
         loadProfile()
+        isAuth()
+            ? history.push("/private")
+            : history.push("/login")
     }, [])
 
 
