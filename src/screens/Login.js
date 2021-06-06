@@ -6,8 +6,9 @@ import login from '../assets/login.svg'
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin  from 'react-facebook-login/dist/facebook-login-render-props';
 import axios from "axios";
+import { authenticate } from '../hlepers/auth'
 
-const Login = () => {
+const Login = ( { history } ) => {
 
     const [ LoginData, setLoginData ] = useState({
         email: '',
@@ -55,15 +56,26 @@ const Login = () => {
             axios
                 .post('/users/login', LoginUser)
                 .then(res => {
-                    console.log(res.data)
-                    setLoginData({
-                        ...LoginData,
-                        email: '',
-                        password: '',
-                        textChange: "submitted"
-                    })
+                    // console.log(res.data)
+                    // setLoginData({
+                    //     ...LoginData,
+                    //     email: '',
+                    //     password: '',
+                    //     textChange: "submitted"
+                    // })
+                    //
+                    // toast.success(res.data.message)
+                    authenticate(res, () => {
+                        setLoginData({
+                            ...LoginData,
+                            email: '',
+                            password: '',
+                            textChange: "submitted"
+                        })
+                        history.push('/private')
+                        toast.success(`Hey ${res.data.user.name}, Welcome back`)
 
-                    toast.success(res.data.message)
+                    })
                 })
                 .catch(err => {
 
