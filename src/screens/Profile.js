@@ -3,6 +3,9 @@ import {getCookie} from "../helpers/auth";
 import {ToastContainer} from "react-toastify";
 import {Link} from "react-router-dom";
 import updateSVG from '../assets/update.svg'
+import axios from "axios";
+import Moment from 'react-moment'
+import 'moment-timezone'
 
 const Profile = () => {
 
@@ -11,19 +14,36 @@ const Profile = () => {
         email: '',
         password: '',
         textChange: 'Update',
+        joindate: '',
         role: ''
     });
 
-    const { name, email, password, textChange, role } = formData
+    const { name, email, password, textChange, role, joindate } = formData
+
+
+
+    // console.log(profile)
 
     const handleChange = text => e => {
         setFormData({...formData, [text]: e.target.value });
+
     }
 
     const loadProfile = () => {
 
         const token = getCookie('token')
-        console.log("*****", token)
+        axios
+            .get('/users/secret', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then(res => {
+                const {name, email, role, password, createdAt} = res.data
+                setFormData({...formData, role, email, name, password, joindate: createdAt})
+            })
+            .catch(err => console.log(err.response))
+
     }
 
 
@@ -66,15 +86,21 @@ const Profile = () => {
                                     className={'w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'}
                                     type={'name'}
                                     placeholder={'Name'}
+                                    onChange={handleChange('name')}
                                     value={name}
                                 />
                                 <input
-                                    disabled
                                     className={'w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'}
                                     type={'password'}
                                     placeholder={'Password'}
+                                    onChange={handleChange('password')}
                                     value={password}
                                 />
+                                <div className={'mt-5 text-center'}>
+                                <span className={'text-gray-500 font-semibold'}>
+                                    가입날짜 : <Moment fromNow ago>{joindate}</Moment>
+                                </span>
+                                </div>
                                 <button
                                     type={'submit'}
                                     className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
