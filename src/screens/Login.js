@@ -6,7 +6,7 @@ import login from '../assets/login.svg'
 import { GoogleLogin } from 'react-google-login'
 import FacebookLogin  from 'react-facebook-login/dist/facebook-login-render-props';
 import axios from "axios";
-import { authenticate } from '../hlepers/auth'
+import { authenticate } from '../helpers/auth'
 
 const Login = ( { history } ) => {
 
